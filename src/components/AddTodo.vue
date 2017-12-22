@@ -26,18 +26,16 @@ export default {
   },
   methods: {
     createTodo: function (evt) {
-      evt.preventDefault()
-      let data = {
-        description: this.description
-      }
+      // evt.preventDefault()
+      let data = { description: this.description }
       let url = config.api_url + '/api/todos'
       let params = {
         method: 'POST',
         body: JSON.stringify(data),
-        headers: {
+        headers: new Headers({
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        })
       }
       fetch(url, params).then((res) => res.text()).then((data) => console.log(data))
     }

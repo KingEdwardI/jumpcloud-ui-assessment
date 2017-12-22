@@ -6,6 +6,7 @@ var PORT = 8004
 app.use(bodyParser.json())
 
 app.use(function logger (req, res, next) {
+  console.log(req.method)
   console.log(req.url)
   console.log(req.body)
   next()

@@ -1,8 +1,12 @@
 <template>
   <v-app>
     <v-content>
-      <v-container text-xs-center>
-        <p class="display-4"> Hello JumpCloud </p>
+      <v-container>
+        <v-layout>
+          <v-flex xs12 text-xs-center>
+            <p class="display-4"> Hello JumpCloud </p>
+          </v-flex>
+        </v-layout>
       </v-container>
       <add-todo/>
       <todo-list/>

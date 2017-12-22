@@ -5,16 +5,17 @@
       <p class="title" v-text="todo.description"/>
     </v-flex>
     <v-flex xs1>
-      <i class="fa fa-2x fa-pencil" @click="editing = !editing"/>
+      <i class="fa fa-2x fa-pencil" @click="editing = true"/>
     </v-flex>
     <v-flex xs1>
-      <v-checkbox v-model="todo.done" @change="updateTodo(todo.id, true)"/>
+      <v-checkbox v-model="todo.done" @click="toggleTodo"/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import config from '../../config'
+import axios from 'axios'
+import config from '../../conf'
 import EditTodo from './EditTodo'
 
 export default {
@@ -25,23 +26,26 @@ export default {
     }
   },
   methods: {
-    deleteTodo (id) {
-      let url = config.api_url + '/api/todos/' + id
-      let params = {
-        method: 'DELETE'
-      }
-      fetch(url, params)
-        .then(res => res.text())
-        .then(data => console.log(data))
-        // .then(() => location.reload())
+    toggleTodo () {
+      let url = config.api_url + '/api/todos/' + this.todo.id
+      let body = this.todo
+      body.done = !body.done
+      axios.put(url, body)
+        .then((res) => {
+          console.log(res)
+        })
     }
   },
-  components: {
-    EditTodo
-  },
+  components: { EditTodo },
   props: ['todo']
 }
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
 </style>

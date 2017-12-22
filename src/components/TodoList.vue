@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import request from 'request'
-import config from '../../config'
+import axios from 'axios'
+import config from '../../conf'
 import TodoLineItem from './TodoLineItem'
 
 export default {
@@ -24,16 +24,13 @@ export default {
   methods: {
     getTodos () {
       let url = config.api_url + '/api/todos'
-      try {
-        request(url, (err, res, body) => {
-          if (err) {
-            console.error(err)
-          }
-          this.todos = JSON.parse(body)
+      axios.get(url)
+        .then((res) => {
+          this.todos = res.data
         })
-      } catch (err) {
-        console.log(err)
-      }
+        .catch((err) => {
+          console.error(err)
+        })
     }
   },
   components: {

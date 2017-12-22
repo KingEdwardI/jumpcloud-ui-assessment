@@ -1,18 +1,15 @@
 <template>
   <v-container>
-    <v-layout row v-for="todo in todos" :key="JSON.stringify(todo)">
-      <v-flex xs11>
-        <v-list-tile-title v-text="todo.description"/>
-      </v-flex>
-      <v-flex xs1>
-        <v-checkbox v-model="todo.done"/>
-      </v-flex>
-    </v-layout>
+    <template v-for="todo in todos">
+      <todo-line-item :todo="todo" :key="JSON.stringify(todo)"/>
+    </template>
   </v-container>
 </template>
 
 <script>
+import request from 'request'
 import config from '../../config'
+import TodoLineItem from './TodoLineItem'
 
 export default {
   name: 'todo-list',
@@ -25,14 +22,22 @@ export default {
     this.getTodos()
   },
   methods: {
-    getTodos: function () {
+    getTodos () {
       let url = config.api_url + '/api/todos'
       try {
-        fetch(url).then((res) => res.json()).then((data) => { this.todos = data })
+        request(url, (err, res, body) => {
+          if (err) {
+            console.error(err)
+          }
+          this.todos = JSON.parse(body)
+        })
       } catch (err) {
         console.log(err)
       }
     }
+  },
+  components: {
+    TodoLineItem
   }
 }
 </script>

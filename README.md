@@ -1,21 +1,54 @@
-# jumpcloud-assessment
+# JumpCloud UI Engineer Assignment
 
-> A Vue Todo App
+## Instructions
 
-## Build Setup
+Using the code already in this repository as a starting point, please create
+the front end for a simple "ToDo" application. The applicaction should allow
+the user to:
 
-``` bash
-# install dependencies
-npm install
+[x] Create a new todo item
+[x] Display a list of todo items
+[x] Update an existing todo item
+  [x] Toggle the done status
+  [x] Change the description
+[x] Delete a todo item
 
-# serve with hot reload at localhost:8080
-npm run dev
+A simple API has been created at `http://localhost:8004/api/todos` that
+will function as the back end. The solution should demonstrate your ability to:
 
-# build for production with minification
-npm run build
+- Organize front end code
+- Interact with an existing API
+- Use a front end JavaScript framework (e.g. _Angular_, _Backbone_, _React_, _Vue_ )
+- Style your work using either custom CSS or a CSS framework
+- Create scalable and secure code
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+Tests are _NOT_ required!
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Running the application
+
+To run the application, make sure you have `node` and `npm` installed on your
+machine. Note that this application was built with node 8.2.1. Then do the
+following:
+
+1. Install dependencies:
+  ```
+  $ npm install
+  ```
+
+2. Run the server:
+  ```
+  $ npm run start:server
+  ```
+
+3. Run the client:
+  ```
+  $ npm run start:client
+  ```
+
+4. Point browser to:
+  ```
+  http://localhost:8080/
+  ```
+
+**JumpCloud Confidential, please do not distribute this assignment in any form.**
+

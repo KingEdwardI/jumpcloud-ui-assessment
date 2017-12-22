@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import config from '../../conf'
 import EditTodo from './EditTodo'
 
 export default {
@@ -27,13 +25,7 @@ export default {
   },
   methods: {
     toggleTodo () {
-      let url = config.api_url + '/api/todos/' + this.todo.id
-      let body = this.todo
-      body.done = !body.done
-      axios.put(url, body)
-        .then((res) => {
-          console.log(res)
-        })
+      this.$store.dispatch('updateTodo', { done: !this.todo.done })
     }
   },
   components: { EditTodo },

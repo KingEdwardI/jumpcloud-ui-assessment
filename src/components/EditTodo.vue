@@ -21,37 +21,21 @@
 </template>
 
 <script>
-import axios from 'axios'
-import config from '../../conf'
-
 export default {
   name: 'edit-todo',
   data () {
     return {
+      // make a copy of the todo passed to the component so it doesn't poke the parent component and cause an unecessary re-render
       todo_: JSON.parse(JSON.stringify(this.todo))
     }
   },
   methods: {
-    log (msg, evt) {
-      console.log(msg)
-      console.log(evt)
-    },
     updateTodo () {
-      let url = config.api_url + '/api/todos/' + this.todo.id
-      let body = this.todo_
-      axios.put(url, body)
-        .then((res) => {
-          console.log(res)
-          this.$emit('cancel')
-        })
+      this.$store.dispatch('changeTodo', this.todo_)
+      this.cancel()
     },
     deleteTodo (id) {
-      let url = config.api_url + '/api/todos/' + id
-      axios.delete(url)
-        .then((res) => {
-          console.log(res)
-          location.reload()
-        })
+      this.$store.dispatch('deleteTodo', this.todo_.id)
     },
     cancel () {
       this.$emit('cancel')

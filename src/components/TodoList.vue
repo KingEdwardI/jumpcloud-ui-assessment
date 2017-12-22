@@ -7,31 +7,17 @@
 </template>
 
 <script>
-import axios from 'axios'
-import config from '../../conf'
 import TodoLineItem from './TodoLineItem'
 
 export default {
   name: 'todo-list',
-  data () {
-    return {
-      todos: []
+  computed: {
+    todos: function () {
+      return this.$store.state.todos
     }
   },
   created () {
-    this.getTodos()
-  },
-  methods: {
-    getTodos () {
-      let url = config.api_url + '/api/todos'
-      axios.get(url)
-        .then((res) => {
-          this.todos = res.data
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
+    this.$store.dispatch('fetchTodos')
   },
   components: {
     TodoLineItem

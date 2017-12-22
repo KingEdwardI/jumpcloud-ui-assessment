@@ -1,25 +1,24 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex xs12 text-xs-center>
+      <v-flex xs7 offset-xs2 text-xs-center>
         <v-form v-on:submit.prevent="createTodo">
           <v-text-field
             single-line
-            label="Description"
+            label="New Todo..."
             v-model="description"
             required
           />
-          <v-btn type="submit">Create</v-btn>
         </v-form>
+      </v-flex>
+      <v-flex xs1>
+        <v-btn @click="createTodo">Create</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import axios from 'axios'
-import config from '../../conf'
-
 export default {
   name: 'add-todo',
   data () {
@@ -28,17 +27,8 @@ export default {
     }
   },
   methods: {
-    createTodo: function (evt) {
-      let url = config.api_url + '/api/todos'
-      let body = { description: this.description }
-      axios.post(url, body)
-        .then((res) => {
-          console.log(res)
-          location.reload()
-        })
-        .catch((err) => {
-          console.error('Failed To Create Todo', err)
-        })
+    createTodo: function () {
+      this.$store.dispatch('createTodo', { description: this.description })
     }
   }
 }

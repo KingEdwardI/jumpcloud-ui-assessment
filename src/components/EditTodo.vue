@@ -1,12 +1,14 @@
 <template>
   <v-layout row>
-    <v-flex xs9>
+    <v-flex xs9 @keyup.enter="updateTodo">
       <v-text-field
         single-line
         required
-        v-model="todo.description"
+        v-model="todo_.description"
         append-icon="fa-floppy-o"
         :append-icon-cb="updateTodo"
+        name="edit"
+        label="Todo..."
       />
     </v-flex>
     <v-flex xs1 offset-xs1>
@@ -19,26 +21,37 @@
 </template>
 
 <script>
-import config from '../../config'
+import axios from 'axios'
+import config from '../../conf'
 
 export default {
   name: 'edit-todo',
+  data () {
+    return {
+      todo_: JSON.parse(JSON.stringify(this.todo))
+    }
+  },
   methods: {
+    log (msg, evt) {
+      console.log(msg)
+      console.log(evt)
+    },
     updateTodo () {
-      let todo = this.todo
-      let url = config.api_url + '/api/todos/' + todo.id
-      let params = {
-        method: 'PUT',
-        body: JSON.stringify(todo),
-        headers: new Headers({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+      let url = config.api_url + '/api/todos/' + this.todo.id
+      let body = this.todo_
+      axios.put(url, body)
+        .then((res) => {
+          console.log(res)
+          this.$emit('cancel')
         })
-      }
-      fetch(url, params)
-        .then(res => res.json())
-        .then(data => console.log(data))
-        // .then(() => location.reload())
+    },
+    deleteTodo (id) {
+      let url = config.api_url + '/api/todos/' + id
+      axios.delete(url)
+        .then((res) => {
+          console.log(res)
+          location.reload()
+        })
     },
     cancel () {
       this.$emit('cancel')

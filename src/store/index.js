@@ -7,13 +7,26 @@ import createLogger from './logger'
 
 Vue.use(Vuex)
 
+const generateError = (error) => {
+  return `${error.response.data}. <br/> 
+          Reason: ${error.message}. <br/>
+          Error: ${error.response.statusText}`
+}
+
 const debug = process.env.NODE_ENV !== 'production'
 
 const state = {
-  todos: []
+  todos: [],
+  error: {
+    isShowing: false,
+    message: ''
+  }
 }
 
 const getters = {
+  doneCount (state) {
+    return state.todos.filter(todo => todo.done).length
+  }
 }
 
 const actions = {
@@ -23,8 +36,9 @@ const actions = {
       .then(res => {
         ctx.commit('setTodos', res.data)
       })
-      .catch((err) => {
-        console.error('Failed To Get All Todos', err)
+      .catch((error) => {
+        console.error('Failed To Get All Todos', error.response)
+        ctx.commit('displayError', generateError(error))
       })
   },
   createTodo (ctx, todo) {
@@ -33,8 +47,9 @@ const actions = {
       .then((res) => {
         ctx.commit('addTodo', res.data)
       })
-      .catch((err) => {
-        console.error('Failed To Create Todo', err)
+      .catch((error) => {
+        console.error('Failed To Create Todo', error.message)
+        ctx.commit('displayError', generateError(error))
       })
   },
   changeTodo (ctx, todo) {
@@ -43,12 +58,20 @@ const actions = {
       .then((res) => {
         ctx.commit('updateTodo', res.data)
       })
+      .catch((error) => {
+        console.error('Failed To Update Todo', error)
+        ctx.commit('displayError', generateError(error))
+      })
   },
   deleteTodo (ctx, id) {
     let url = config.api_url + '/api/todos/' + id
     axios.delete(url)
       .then((res) => {
         ctx.commit('removeTodo', id)
+      })
+      .catch((error) => {
+        console.error('Failed To Delete Todo', error)
+        ctx.commit('displayError', generateError(error))
       })
   }
 }
@@ -61,16 +84,19 @@ const mutations = {
     state.todos.push(todo)
   },
   updateTodo (state, newTodo) {
-    let prevIndex = state.todos.findIndex(t => t.id === newTodo.id)
-    let newState = [
-      ...state.slice(0, prevIndex),
-      newTodo,
-      ...state.slice(prevIndex + 1)
-    ]
-    state = newState
+    state.todos = state.todos.filter(t => t.id !== newTodo.id)
+    state.todos.push(newTodo)
   },
   removeTodo (state, id) {
-    state = state.todos.filter(t => t.id !== id)
+    state.todos = state.todos.filter(t => t.id !== id)
+  },
+  displayError (state, message) {
+    state.error.isShowing = true
+    state.error.message = message
+  },
+  hideError (state, message) {
+    state.error.isShowing = false
+    state.error.message = ''
   }
 }
 

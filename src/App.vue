@@ -8,6 +8,7 @@
           </v-flex>
         </v-layout>
       </v-container>
+      <message-box/>
       <add-todo/>
       <todo-list/>
     </v-content>
@@ -17,12 +18,14 @@
 <script>
 import AddTodo from './components/AddTodo'
 import TodoList from './components/TodoList'
+import MessageBox from './components/MessageBox'
 
 export default {
   name: 'app',
   components: {
     AddTodo,
-    TodoList
+    TodoList,
+    MessageBox
   }
 }
 </script>

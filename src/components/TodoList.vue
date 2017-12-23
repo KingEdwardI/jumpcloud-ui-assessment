@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <p class="header">Total Completed: {{ numDone }}</p>
     <template v-for="todo in todos">
       <todo-line-item :todo="todo" :key="JSON.stringify(todo)"/>
     </template>
@@ -13,7 +14,10 @@ export default {
   name: 'todo-list',
   computed: {
     todos: function () {
-      return this.$store.state.todos
+      return JSON.parse(JSON.stringify(this.$store.state.todos)).sort((a, b) => a.id - b.id)
+    },
+    numDone: function () {
+      return this.$store.getters.doneCount
     }
   },
   created () {

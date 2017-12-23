@@ -25,7 +25,9 @@ export default {
   },
   methods: {
     toggleTodo () {
-      this.$store.dispatch('updateTodo', { done: !this.todo.done })
+      let td = this.todo
+      td.done = !td.done
+      this.$store.dispatch('changeTodo', td)
     }
   },
   components: { EditTodo },

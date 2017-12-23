@@ -35,7 +35,7 @@ export default {
       this.cancel()
     },
     deleteTodo (id) {
-      this.$store.dispatch('deleteTodo', this.todo_.id)
+      this.$store.dispatch('deleteTodo', id)
     },
     cancel () {
       this.$emit('cancel')

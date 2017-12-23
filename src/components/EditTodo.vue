@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     updateTodo () {
-      this.$store.dispatch('changeTodo', this.todo_)
+      this.$store.dispatch('changeTodo', this.todo_) // be sure to pass back the todo_ copy of the todo.
       this.cancel()
     },
     deleteTodo (id) {

@@ -37,7 +37,7 @@ const actions = {
         ctx.commit('setTodos', res.data)
       })
       .catch((error) => {
-        console.error('Failed To Get All Todos', error.response)
+        console.error('Failed To Get All Todos', error, error.response)
         ctx.commit('displayError', generateError(error))
       })
   },

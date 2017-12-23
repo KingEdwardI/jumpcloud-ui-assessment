@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container elevation-12>
     <p class="header">Total Completed: {{ numDone }}</p>
     <hr class="mb-3"/>
     <template v-for="todo in todos">

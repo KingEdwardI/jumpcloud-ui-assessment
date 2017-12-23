@@ -47,7 +47,7 @@ following:
 
 4. Point browser to:
   ```
-  http://localhost:8080/
+  http://localhost:8005/
   ```
 
 **JumpCloud Confidential, please do not distribute this assignment in any form.**

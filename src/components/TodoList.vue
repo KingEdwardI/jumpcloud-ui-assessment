@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <p class="header">Total Completed: {{ numDone }}</p>
+    <hr class="mb-3"/>
     <template v-for="todo in todos">
       <todo-line-item :todo="todo" :key="JSON.stringify(todo)"/>
     </template>

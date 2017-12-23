@@ -1,10 +1,10 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-content>
       <v-container>
         <v-layout>
           <v-flex xs12 text-xs-center>
-            <p class="display-4"> Hello JumpCloud </p>
+            <p class="display-3"> Hello JumpCloud </p>
           </v-flex>
         </v-layout>
       </v-container>

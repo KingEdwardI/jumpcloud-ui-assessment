@@ -1,6 +1,6 @@
 <template>
   <v-layout row>
-    <v-flex xs9 @keyup.enter="updateTodo">
+    <v-flex xs8 @keyup.enter="updateTodo">
       <v-text-field
         single-line
         required
@@ -14,6 +14,7 @@
     <v-flex xs1 offset-xs1>
       <i class="fa fa-2x fa-pencil" @click="cancel"/>
     </v-flex>
+    <v-flex xs1/>
     <v-flex xs1>
       <i class="fa fa-2x fa-times-circle" @click="deleteTodo(todo.id)"/>
     </v-flex>
